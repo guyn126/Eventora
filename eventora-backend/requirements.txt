@@ -8,3 +8,4 @@ psycopg2-binary
 Flask-JWT-Extended
 Werkzeug
 gunicorn
+python-dateutil
