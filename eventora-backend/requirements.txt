@@ -7,3 +7,4 @@ marshmallow-sqlalchemy
 psycopg2-binary
 Flask-JWT-Extended
 Werkzeug
+gunicorn
