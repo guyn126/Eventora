@@ -2,6 +2,10 @@ import React, { useState } from "react";
 import { Box, Typography, Paper, TextField, Button, Alert, Snackbar } from "@mui/material";
 import axios from "axios";
 
+
+const BASE_URL = "https://eventora-backend.onrender.com";
+
+
 const ProfilePage = () => {
   const user = JSON.parse(localStorage.getItem("user") || "{}");
   const [name, setName] = useState(user.name || "");
@@ -18,7 +22,7 @@ const ProfilePage = () => {
     const token = localStorage.getItem("access_token");
     try {
       const res = await axios.put(
-        "http://localhost:5000/api/auth/profile",
+        `${BASE_URL}/api/auth/profile`,
         { name, email, password: password ? password : undefined },
         { headers: { Authorization: `Bearer ${token}` } }
       );

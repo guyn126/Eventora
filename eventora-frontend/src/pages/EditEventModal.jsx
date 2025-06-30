@@ -3,6 +3,9 @@ import { Modal, Box, Typography, TextField, Button } from "@mui/material";
 import dayjs from "dayjs";
 import axios from "axios";
 
+
+const API_BASE = "https://eventora-backend.onrender.com/api";
+
 const EditEventModal = ({ open, onClose, event, onSave }) => {
   const [form, setForm] = useState({
     title: "",
@@ -34,7 +37,7 @@ const EditEventModal = ({ open, onClose, event, onSave }) => {
     const token = localStorage.getItem("access_token");
     try {
       await axios.patch(
-        `http://localhost:5000/api/admin/event/${event.id}`,
+        `${API_BASE}/admin/event/${event.id}`,
         {
           title: form.title,
           date: form.date,
@@ -47,7 +50,7 @@ const EditEventModal = ({ open, onClose, event, onSave }) => {
       if (onClose) onClose();
     } catch (err) {
       setLoading(false);
-      alert("Erreur lors de la sauvegarde: " + (err?.response?.data?.error || ""));
+      alert("Error on the backup: " + (err?.response?.data?.error || ""));
     }
   };
 

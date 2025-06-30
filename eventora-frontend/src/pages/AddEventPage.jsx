@@ -61,7 +61,7 @@ const AddEventPage = () => {
             try {
               const token = localStorage.getItem("access_token");
               await axios.post(
-                "http://localhost:5000/api/events/",
+                "https://eventora-backend.onrender.com/api/events/",
                 { ...values, date: dayjs(values.date).toISOString() },
                 { headers: { Authorization: `Bearer ${token}` } }
               );

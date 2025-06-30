@@ -7,7 +7,10 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import axios from "axios";
 
-import EditEventModal from "./EditEventModal"; 
+import EditEventModal from "./EditEventModal";
+
+
+const API_BASE = "https://eventora-backend.onrender.com/api";
 
 const AdminOrganizersPage = () => {
   const [organizers, setOrganizers] = useState([]);
@@ -19,7 +22,7 @@ const AdminOrganizersPage = () => {
     setLoading(true);
     const token = localStorage.getItem("access_token");
     try {
-      const res = await axios.get("http://localhost:5000/api/admin/organizers", {
+      const res = await axios.get(`${API_BASE}/admin/organizers`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setOrganizers(res.data.organizers);
@@ -33,27 +36,24 @@ const AdminOrganizersPage = () => {
     fetchOrganizers();
   }, []);
 
-
   const handleDeleteEvent = async (eventId) => {
     if (!window.confirm("Are you sure you want to delete this event?")) return;
     const token = localStorage.getItem("access_token");
-    await axios.delete(`http://localhost:5000/api/admin/event/${eventId}`, {
+    await axios.delete(`${API_BASE}/admin/event/${eventId}`, {
       headers: { Authorization: `Bearer ${token}` }
     });
     fetchOrganizers();
   };
 
-  
   const handleDeleteOrganizer = async (organizerId) => {
     if (!window.confirm("Are you sure you want to delete this organizer and all his/her events?")) return;
     const token = localStorage.getItem("access_token");
-    await axios.delete(`http://localhost:5000/api/admin/organizer/${organizerId}`, {
+    await axios.delete(`${API_BASE}/admin/organizer/${organizerId}`, {
       headers: { Authorization: `Bearer ${token}` }
     });
     fetchOrganizers();
   };
 
-  
   const handleEditEvent = (event) => setEditEvent(event);
   const handleCloseEditModal = () => setEditEvent(null);
 
@@ -115,7 +115,6 @@ const AdminOrganizersPage = () => {
         ))
       )}
 
-    
       {editEvent && (
         <EditEventModal
           open={!!editEvent}

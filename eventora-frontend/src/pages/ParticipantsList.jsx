@@ -4,6 +4,9 @@ import IconButton from "@mui/material/IconButton";
 import DeleteIcon from "@mui/icons-material/Delete";
 import axios from "axios";
 
+const BASE_URL = "https://eventora-backend.onrender.com";
+
+
 const ParticipantsList = () => {
   const [participants, setParticipants] = useState([]);
   const user = JSON.parse(localStorage.getItem("user") || "{}");
@@ -15,11 +18,11 @@ const ParticipantsList = () => {
       const token = localStorage.getItem("access_token");
       let url = "";
       if (isAdmin) {
-        url = "http://localhost:5000/api/admin/users";
+        url = `${BASE_URL}/api/admin/users`;
       } else if (isOrganizer) {
-        url = "http://localhost:5000/api/organizer/participants";
+        url = `${BASE_URL}/api/organizer/participants`;
       } else {
-        setParticipants([]); 
+        setParticipants([]);
         return;
       }
       const res = await axios.get(url, {
@@ -34,12 +37,11 @@ const ParticipantsList = () => {
     fetchParticipants();
   }, [isAdmin, isOrganizer]);
 
-  
   const handleDelete = async (id) => {
     if (!isAdmin) return;
     if (window.confirm("Are you sure you want to delete this participant?")) {
       const token = localStorage.getItem("access_token");
-      await axios.delete(`http://localhost:5000/api/admin/delete_user/${id}`, {
+      await axios.delete(`${BASE_URL}/api/admin/delete_user/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setParticipants(participants.filter((p) => p.id !== id));

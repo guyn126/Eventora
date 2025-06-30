@@ -14,6 +14,9 @@ const cardStyle = {
   alignItems: "center"
 };
 
+
+const API_BASE = "https://eventora-backend.onrender.com/api";
+
 const AdminDashboardPage = () => {
   const [stats, setStats] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -25,7 +28,7 @@ const AdminDashboardPage = () => {
     const fetchDashboard = async () => {
       try {
         const token = localStorage.getItem("access_token");
-        const res = await axios.get("http://localhost:5000/api/admin/dashboard", {
+        const res = await axios.get(`${API_BASE}/admin/dashboard`, {
           headers: { Authorization: `Bearer ${token}` }
         });
         setStats(res.data);
@@ -47,7 +50,7 @@ const AdminDashboardPage = () => {
       try {
         const token = localStorage.getItem("access_token");
         const res = await axios.get(
-          `http://localhost:5000/api/events/${eventId}/participants`,
+          `${API_BASE}/events/${eventId}/participants`,
           { headers: { Authorization: `Bearer ${token}` } }
         );
         setParticipants((prev) => ({

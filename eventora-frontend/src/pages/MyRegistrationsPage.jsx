@@ -10,11 +10,15 @@ const MyRegistrations = () => {
     const fetchRegistrations = async () => {
       try {
         const token = localStorage.getItem("access_token");
-        const res = await axios.get("http://localhost:5000/api/registrations/my", {
-          headers: { Authorization: `Bearer ${token}` },
-        });
+        const res = await axios.get(
+          
+          "https://eventora-backend.onrender.com/api/registrations/my",
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          }
+        );
         setRegistrations(res.data.registrations || []);
-      } catch  {
+      } catch {
         setError("Unable to fetch your registrations.");
         setRegistrations([]);
       }
@@ -29,7 +33,7 @@ const MyRegistrations = () => {
       <Typography
         variant="h4"
         gutterBottom
-        align="center"        
+        align="center"
         sx={{ fontWeight: "bold" }}
       >
         My Registrations
@@ -58,8 +62,8 @@ const MyRegistrations = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {registrations.map((reg) => (
-                <TableRow key={reg.id}>
+              {registrations.map((reg, i) => (
+                <TableRow key={reg.id || i}>
                   <TableCell>{reg.event?.title}</TableCell>
                   <TableCell>{reg.event?.date}</TableCell>
                   <TableCell>{reg.event?.location}</TableCell>

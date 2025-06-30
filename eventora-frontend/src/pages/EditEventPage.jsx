@@ -9,9 +9,9 @@ const EventsPage = () => {
 
   const fetchEvents = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/api/events/");
-     setEvents(res.data || []);
-    } catch  {
+      const res = await axios.get("https://eventora-backend.onrender.com/api/events/");
+      setEvents(res.data || []);
+    } catch {
       setError("Unable to fetch events.");
     }
   };

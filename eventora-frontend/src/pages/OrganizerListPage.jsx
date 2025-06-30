@@ -6,6 +6,10 @@ const OrganizerListPage = () => {
   const [loading, setLoading] = useState(true);
   const [fetchError, setFetchError] = useState(null);
 
+  
+  const BASE_URL = "https://eventora-backend.onrender.com";
+  
+
   useEffect(() => {
     const fetchOrganizers = async () => {
       setLoading(true);
@@ -13,25 +17,26 @@ const OrganizerListPage = () => {
       try {
         const token = localStorage.getItem("access_token");
         const response = await axios.get(
-          "http://localhost:5000/api/admin/organizers",
+          `${BASE_URL}/api/admin/organizers`,
           {
             headers: { Authorization: `Bearer ${token}` },
           }
         );
-        setOrganizers(response.data);
+        
+        setOrganizers(response.data.organizers || []);
       } catch {
         setFetchError("Unable to fetch organizers.");
       }
       setLoading(false);
     };
     fetchOrganizers();
-  }, []);
+  }, [BASE_URL]);
 
   const handleDelete = async (id) => {
     if (!window.confirm("Delete this organizer?")) return;
     try {
       const token = localStorage.getItem("access_token");
-      await axios.delete(`http://localhost:5000/api/admin/organizers/${id}`, {
+      await axios.delete(`${BASE_URL}/api/admin/organizer/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setOrganizers((prev) => prev.filter((org) => org.id !== id));
@@ -67,7 +72,6 @@ const OrganizerListPage = () => {
             >
               Delete
             </button>
-          
           </li>
         ))}
       </ul>

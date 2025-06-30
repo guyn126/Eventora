@@ -45,7 +45,8 @@ const LoginPage = () => {
             setError("");
             try {
               const res = await axios.post(
-                "http://localhost:5000/api/auth/login",
+                
+                "https://eventora-backend.onrender.com/api/auth/login",
                 values
               );
               localStorage.setItem("access_token", res.data.access_token);

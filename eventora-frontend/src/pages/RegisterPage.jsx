@@ -13,6 +13,10 @@ import {
 } from "@mui/material";
 import axios from "axios";
 
+
+const BASE_URL = "https://eventora-backend.onrender.com";
+
+
 const RegisterSchema = Yup.object().shape({
   name: Yup.string().min(2, "Too short!").required("Required"),
   email: Yup.string().email("Invalid email").required("Required"),
@@ -53,7 +57,7 @@ const RegisterPage = () => {
             setError("");
             try {
               await axios.post(
-                "http://localhost:5000/api/auth/register",
+                `${BASE_URL}/api/auth/register`,
                 values
               );
               navigate("/login");
